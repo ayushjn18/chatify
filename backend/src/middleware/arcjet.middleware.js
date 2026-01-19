@@ -2,6 +2,12 @@ import aj from "../lib/arcjet.js";
 import { isSpoofedBot } from "@arcjet/inspect";
 
 export const arcjetProtection = async (req, res, next) => {
+
+if (process.env.NODE_ENV !== "production") {
+    return next();
+  }
+
+
   try {
     const decision = await aj.protect(req);
 
