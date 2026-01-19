@@ -1,14 +1,21 @@
 import express from "express";
+import { getAllContacts } from "../controllers/message.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
+import { getMessageByUserId } from "../controllers/message.controller.js";
+import { sendMessage } from "../controllers/message.controller.js";
+import { getChatPartners } from "../controllers/message.controller.js";
+import { arcjetProtection } from "../middleware/arcjet.middleware.js";
 
 const router =express.Router();
 
-router.get("/send",(req,res)=>{
-    res.send("send message endpoint");
-});
+router.use(arcjetProtection,protectRoute);
 
-router.get("/receive",(req,res)=>{
-    res.send("receive message endpoint");
-});
+router.get("/contacts",getAllContacts);
+router.get("/chats",getChatPartners);
+router.get("/:id",getMessageByUserId);
+router.post("/send/:id",sendMessage);
+
+
 
 
 export default router;
