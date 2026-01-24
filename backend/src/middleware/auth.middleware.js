@@ -3,6 +3,16 @@ import User from "../models/User.js";
 import {ENV} from "../lib/env.js";
 
 export const protectRoute=async (req,res,next)=>{
+
+console.log("Cookies received:", req.cookies);
+
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized - no token" });
+  }
+
+
+
     try {
         const token=req.cookies.jwt;
         if(!token) return res.status(401).json({message : "Unautorizied -no token provided"});
